@@ -26,6 +26,8 @@ namespace TestChangeBot
             _currentCourse = new CurrentCourse();
         }
 
+        private static Dictionary<long, OperationState> _userOperations = new Dictionary<long, OperationState>();
+
         public async Task RunBotAsync()
         {
             using var cts = new System.Threading.CancellationTokenSource();
@@ -61,8 +63,9 @@ namespace TestChangeBot
             {
                 ReplyKeyboardMarkup keyboard = new(new[]
                 {
-                    new KeyboardButton[] { new KeyboardButton("Текущий курс") },
-                    new KeyboardButton[] { new KeyboardButton("Приобрести криптовалюту") }
+                    new KeyboardButton[] { new KeyboardButton("💶 Обменять"), new KeyboardButton("👤 Личный кабинет") },
+                    new KeyboardButton[] { new KeyboardButton("💬 Сообщество"), new KeyboardButton("📞 Поддержка") },
+                    new KeyboardButton[] { new KeyboardButton("⚖️ Текущий курс") }
                 })
                 {
                     ResizeKeyboard = true
@@ -74,23 +77,50 @@ namespace TestChangeBot
             {
                 await _currentCourse.SendCryptoCurrencyRates(message.Chat.Id);
             }
+            else if (message.Text == "📞 Поддержка")
+            {
+                // Создаем и отправляем сообщение с ссылкой-кнопкой
+                var supportButton = new InlineKeyboardButton(string.Empty)
+                {
+                    Text = "Связаться с поддержкой", // Указываем текст для кнопки
+                    Url = "https://t.me/GrekKH" // Здесь URL, на который должна вести ссылка
+                };
 
-            else if (message.Text == "Приобрести криптовалюту")
+                var inlineKeyboard = new InlineKeyboardMarkup(new[] { new[] { supportButton } });
+
+                await client.SendTextMessageAsync(message.Chat.Id, "Для связи с поддержкой нажмите на кнопку ниже:", replyMarkup: inlineKeyboard);
+            }
+            else if (message.Text == "💬 Сообщество")
+            {
+                // Создаем и отправляем сообщение с ссылкой-кнопкой
+                var supportButton = new InlineKeyboardButton(string.Empty)
+                {
+                    Text = "Перейти в группу", // Указываем текст для кнопки
+                    Url = "https://t.me/GrekKH" // Здесь URL, на который должна вести ссылка
+                };
+
+                var inlineKeyboard = new InlineKeyboardMarkup(new[] { new[] { supportButton } });
+
+                await client.SendTextMessageAsync(message.Chat.Id, "Для связи с поддержкой нажмите на кнопку ниже:", replyMarkup: inlineKeyboard);
+            }
+            else if (message.Text == "💶 Обменять")
             {
                 var cryptoCurrencies = new[]
                 {
-        new[] { "BNB (Smart Chain Bep20)", "Matic (Polygon)" }, // Здесь можно добавить другие криптовалюты
-        new[] { "SOL (Solana)", "TRX (Tron TRC20)" },
-        new[] { "ETH (ERC20/Arb/OP/ZK)", "USDT (BEP20/TRC20)" },
-        new[] { "APT (Aptos)", "SUI (Sui Network)" },
-        new[] { "BTC (Bitcoin)", "BRC (Beercoin)" }
+        new[] { "USDT", "TRX", "LTC" }, // Здесь можно добавить другие криптовалюты
+        new[] { "BCH", "DAI", "BUSD" },
+        new[] { "TON", "BTC", "DASH" },
+        new[] { "XMR", "VERSE", "DOGE" },
+        new[] { "USDC", "MATIC", "BNB" },
+        new[] { "ETH" }
     };
 
                 var inlineKeyboard = new InlineKeyboardMarkup(cryptoCurrencies
                     .Select(row => row.Select(currency => InlineKeyboardButton.WithCallbackData(currency, $"select_base_{currency}")))
                 );
+                string textWithBoldWord = "Выберите монету которую <b>меняете</b>"; //можно писать с Html-тегами, так как выводится с parseMode: ParseMode.Html
 
-                await client.SendTextMessageAsync(message.Chat.Id, "Выберите криптовалюту:", replyMarkup: inlineKeyboard);
+                await client.SendTextMessageAsync(message.Chat.Id, text: textWithBoldWord, parseMode: ParseMode.Html, replyMarkup: inlineKeyboard);
             }
 
             else
@@ -139,126 +169,199 @@ namespace TestChangeBot
                     /*string selectedPair = $"{_userSelectedBaseCurrencies[chatId]}/{selectedTargetCurrency}";*/
                     switch (selectedTargetCurrency)
                     {
-                        case "BNB (Smart Chain Bep20)/USDT (BEP20/TRC20)":
-                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "BNB (Smart Chain Bep20)/UAH":
-                            paymentMethodMessage = "Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "BNB (Smart Chain Bep20)/USD":
-                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "Matic (Polygon)/USDT (BEP20/TRC20)":
-                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "Matic (Polygon)/UAH":
-                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "Matic (Polygon)/USD":
-                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "SOL (Solana)/USDT (BEP20/TRC20)":
-                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "SOL (Solana)/UAH":
-                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "SOL (Solana)/USD":
-                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "TRX (Tron TRC20)/USDT (BEP20/TRC20)":
-                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "TRX (Tron TRC20)/UAH":
-                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "TRX (Tron TRC20)/USD":
-                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "ETH (ERC20/Arb/OP/ZK)/USDT (BEP20/TRC20)":
-                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "ETH (ERC20/Arb/OP/ZK)/UAH":
-                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "ETH (ERC20/Arb/OP/ZK)/USD":
-                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
-                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
-                            break;
-                        case "USDT (BEP20/TRC20)/USDT (BEP20/TRC20)":
+                        case "USDT/USDT (BEP20/TRC20)":
                             paymentMethodMessage = "Нелья менять USDT в USDT";
                             await Console.Out.WriteLineAsync("Нелья менять USDT в USDT");
                             break;
-                        case "USDT (BEP20/TRC20)/UAH":
+                        case "USDT/UAH":
                             paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "USDT (BEP20/TRC20)/USD":
+                        case "USDT/USD":
                             paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "APT (Aptos)/USDT (BEP20/TRC20)":
+                        case "TRX/USDT (BEP20/TRC20)":
                             paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "APT (Aptos)/UAH":
-                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                        case "TRX/UAH":
+                            paymentMethodMessage = "Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "APT (Aptos)/USD":
+                        case "TRX/USD":
                             paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "SUI (Sui Network)/USDT (BEP20/TRC20)":
+                        case "LTC/USDT (BEP20/TRC20)":
                             paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "SUI (Sui Network)/UAH":
+                        case "LTC/UAH":
                             paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "SUI (Sui Network)/USD":
+                        case "LTC/USD":
                             paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "BTC (Bitcoin)/USDT (BEP20/TRC20)":
+                        case "BCH/USDT (BEP20/TRC20)":
                             paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "BTC (Bitcoin)/UAH":
+                        case "BCH/UAH":
                             paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "BTC (Bitcoin)/USD":
+                        case "BCH/USD":
                             paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "BRC (Beercoin)/USDT (BEP20/TRC20)":
+                        case "DAI/USDT (BEP20/TRC20)":
                             paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "BRC (Beercoin)/UAH":
+                        case "DAI/UAH":
                             paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
-                        case "BRC (Beercoin)/USD":
+                        case "DAI/USD":
                             paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
                             await Console.Out.WriteLineAsync(selectedTargetCurrency);
                             break;
+                        case "BUSD/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "BUSD/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "BUSD/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "TON/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "TON/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "TON/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "BTC/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "BTC/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "BTC/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "DASH/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "DASH/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "DASH/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "XMR/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "XMR/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "XMR/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "VERSE/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "VERSE/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "VERSE/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "DOGE/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "DOGE/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "DOGE/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "USDC/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "USDC/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "USDC/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "MATIC/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "MATIC/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "MATIC/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "BNB/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "BNB/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "BNB/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "ETH/USDT (BEP20/TRC20)":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USDT\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "ETH/UAH":
+                            paymentMethodMessage = $"Вот карта для оплаты в UAH: 5375414127082617\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+                        case "ETH/USD":
+                            paymentMethodMessage = $"Вот кошелек для оплаты в USD\n В назначении платежа укажите: {selectedTargetCurrency}";
+                            await Console.Out.WriteLineAsync(selectedTargetCurrency);
+                            break;
+
                         // Add other exchange options and corresponding payment messages here
                         default:
                             paymentMethodMessage = "Способ оплаты не определен";
