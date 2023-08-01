@@ -176,237 +176,237 @@ namespace TestChangeBot
                             break;
                         case "USDT/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "uah");
                             await consoleAnswer;
                             break;
                         case "USDT/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "TRX/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "TRX/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "TRX/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "LTC/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "LTC/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "LTC/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BCH/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BCH/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BCH/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "DAI/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "DAI/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "DAI/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BUSD/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BUSD/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BUSD/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "TON/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "TON/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "TON/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BTC/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BTC/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BTC/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "DASH/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "DASH/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "DASH/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "XMR/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "XMR/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "XMR/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "VERSE/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "VERSE/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "VERSE/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "DOGE/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "DOGE/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "DOGE/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "USDC/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "USDC/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "USDC/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "MATIC/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "MATIC/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "MATIC/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BNB/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BNB/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "BNB/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "ETH/USDT (BEP20/TRC20)":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSDT}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "ETH/UAH":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUAH}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                         case "ETH/USD":
                             await client.SendTextMessageAsync(message.Chat.Id, $"Вы хотите поменять {message.Text} {operationState.SelectedTargetCurrency}. Id вашей операции: {operationState.OperationId}. {walletUSD}");
-                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd");
+                            await _currentCourse.CalculateAmountInUSD(message.Chat.Id, message.Text, "ethereum/usd", "usd");
                             await consoleAnswer;
                             break;
                     }

@@ -25,28 +25,6 @@ namespace TestChangeBot
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        private async Task LoadFiatCurrencyRates()
-        {
-            try
-            {
-                HttpResponseMessage response = await httpClient.GetAsync("https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5");
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<List<FiatCurrencyRate>>(responseBody);
-                _fiatData = data.ToDictionary(rate => rate.Ccy, rate => rate.Buy);
-            }
-            catch (HttpRequestException ex)
-            {
-                // Обработайте ошибку загрузки данных
-                Console.WriteLine($"Ошибка при получении данных о курсах гривны: {ex.Message}");
-            }
-            catch (JsonException ex)
-            {
-                // Обработайте ошибку разбора данных
-                Console.WriteLine($"Ошибка при разборе данных о курсах гривны: {ex.Message}");
-            }
-        }
-
         private async Task LoadCryptoCurrencyRates()
         {
             try
@@ -66,6 +44,26 @@ namespace TestChangeBot
             {
                 // Обработайте ошибку разбора данных
                 Console.WriteLine($"Ошибка при разборе данных о курсах криптовалют: {ex.Message}");
+            }
+        }
+
+        private async Task LoadFiatCurrencyRates()
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync("https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5");
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<List<FiatCurrencyRate>>(responseBody);
+                _fiatData = data.ToDictionary(rate => rate.Ccy, rate => rate.Buy);
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Ошибка при получении данных о курсах гривны: {ex.Message}");
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"Ошибка при разборе данных о курсах гривны: {ex.Message}");
             }
         }
 
@@ -150,16 +148,24 @@ namespace TestChangeBot
 
         private decimal GetFiatExchangeRate(string currencyCode)
         {
-            if (_fiatData.TryGetValue(currencyCode, out decimal exchangeRate))
+            string fiatCurrencyCode = currencyCode switch
+            {
+                "usd" => "USD",
+                "uah" => "UAH",
+                // Добавьте другие коды валют по необходимости
+                _ => string.Empty
+            };
+
+            if (!string.IsNullOrEmpty(fiatCurrencyCode) && _fiatData.TryGetValue(fiatCurrencyCode, out decimal exchangeRate))
             {
                 return exchangeRate;
             }
 
-            // Если курс обмена не найден, можно вернуть значение по умолчанию или обработать ошибку
+            // Вернуть значение по умолчанию или обработать ошибку
             return 0;
         }
 
-        public async Task CalculateAmountInUSD(long chatId, string message, string selectedCurrencyPair)
+        public async Task CalculateAmountInUSD(long chatId, string message, string selectedCurrencyPair, string currenceFiat)
         {
             // Преобразуем строку message в значение типа decimal
             if (!decimal.TryParse(message.Replace(',', '.'), out decimal amountToBuy))
@@ -173,19 +179,31 @@ namespace TestChangeBot
             {
                 await LoadCryptoCurrencyRates();
             }
-
-            // Выбираем валютную пару, например, "ethereum/usd"
-            /*string selectedCurrencyPair = "ethereum/usd";*/
+            if (_fiatData == null)
+            {
+                await LoadFiatCurrencyRates();
+            }
 
             // Получаем текущий курс выбранной валютной пары
             decimal exchangeRate = GetExchangeRate(selectedCurrencyPair);
 
+            decimal exchangeFiatRate = GetFiatExchangeRate(selectedCurrencyPair.Split('/')[1].ToLower());
+
             // Выполняем расчет
             decimal totalAmountInUSD = amountToBuy * exchangeRate;
-            string totalAmountInUSDMessage = $"{totalAmountInUSD}";
+            string totalAmountInUSDMessageUSD = $"{totalAmountInUSD}";
+            decimal totalAmountInUAH = totalAmountInUSD * exchangeFiatRate;
+            string totalAmountInUAHMessage = $"{totalAmountInUAH}";
 
-            // Отправляем результат обратно пользователю
-            await TelegramBotHandler._client.SendTextMessageAsync(chatId, totalAmountInUSDMessage);
+
+            if (currenceFiat == "usd")
+            {
+                await TelegramBotHandler._client.SendTextMessageAsync(chatId, totalAmountInUSDMessageUSD);
+            }
+            if (currenceFiat == "uah")
+            {
+                await TelegramBotHandler._client.SendTextMessageAsync(chatId, totalAmountInUAHMessage);
+            }
         }
     }
 }
