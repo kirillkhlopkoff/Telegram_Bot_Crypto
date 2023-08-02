@@ -13,7 +13,6 @@ class Program
         var botHandler = new TelegramBotHandler("6248006565:AAGd7yik-RwqW4yrO_X21pbYvvRpsR04QGM");
         botHandler.RunBotAsync().GetAwaiter().GetResult();
     }
-
 }
 
 

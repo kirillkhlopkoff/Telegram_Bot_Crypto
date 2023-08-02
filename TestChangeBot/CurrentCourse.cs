@@ -98,13 +98,13 @@ namespace TestChangeBot
                     data.TryGetValue("monero", out Dictionary<string, decimal> moneroData))
                 {
                     string rates = $"Курсы криптовалют:\n" +
-                                   $"Tether (BTC): ${tetherData["usd"]}\n" +
+                                   $"Tether (USDT): ${tetherData["usd"]}\n" +
                                    $"Биткоин (BTC): ${bitcoinData["usd"]}\n" +
                                    $"Эфириум (ETH): ${ethereumData["usd"]}\n" +
-                                   $"Лайткоин (LTC): ${litecoinData["usd"]}\n" +
+                                   $"Litecoin (LTC): ${litecoinData["usd"]}\n" +
                                    $"Кардано (ADA): ${cardanoData["usd"]}\n" +
                                    $"Трон (TRX): ${tronData["usd"]}\n" +
-                                   $"Биткоин-кеш (BCH): ${bitcoincashData["usd"]}\n" +
+                                   $"Bitcoin cash (BCH): ${bitcoincashData["usd"]}\n" +
                                    $"Monero (XMR): ${moneroData["usd"]}\n" +
                                    $"Dai (DAI): ${daiData["usd"]}\n" +
                                    $"Binance-USD (BUSD): ${binanceusdData["usd"]}\n" +
@@ -152,6 +152,7 @@ namespace TestChangeBot
             {
                 "usd" => "USD",
                 "uah" => "UAH",
+                "usdt" => "USDT",
                 // Добавьте другие коды валют по необходимости
                 _ => string.Empty
             };
@@ -191,9 +192,55 @@ namespace TestChangeBot
 
             // Выполняем расчет
             decimal totalAmountInUSD = amountToBuy * exchangeRate;
-            string totalAmountInUSDMessageUSD = $"{totalAmountInUSD}";
-            decimal totalAmountInUAH = totalAmountInUSD * exchangeFiatRate;
-            string totalAmountInUAHMessage = $"{totalAmountInUAH}";
+            decimal totalAmountInUAH = (amountToBuy * exchangeRate) * exchangeFiatRate;
+            decimal totalAmountInUSDT = amountToBuy * exchangeRate;
+
+            // Округляем значения до 2-х цифр после запятой
+            totalAmountInUSD = Math.Round(totalAmountInUSD, 2);
+            totalAmountInUAH = Math.Round(totalAmountInUAH, 2);
+            totalAmountInUSDT = Math.Round(totalAmountInUSDT, 2);
+
+            // Применяем правила комиссии
+            decimal commissionRate = 0;
+            if (totalAmountInUSD < 100)
+            {
+                commissionRate = 0.35m; // 35%
+            }
+            else if (totalAmountInUSD >= 100 && totalAmountInUSD < 500)
+            {
+                commissionRate = 0.3m; // 30%
+            }
+            else if (totalAmountInUSD >= 500)
+            {
+                commissionRate = 0.25m; // 25%
+            }
+
+            if (totalAmountInUAH < 100)
+            {
+                commissionRate = 0.35m; // 35%
+            }
+            else if (totalAmountInUAH >= 100 && totalAmountInUAH < 500)
+            {
+                commissionRate = 0.3m; // 30%
+            }
+            else if (totalAmountInUAH >= 500)
+            {
+                commissionRate = 0.25m; // 25%
+            }
+
+            // Вычисляем комиссию и добавляем ее к итоговой сумме
+            decimal commissionAmountUSD = totalAmountInUSD * commissionRate;
+            decimal commissionAmountUAH = totalAmountInUAH * commissionRate;
+            decimal totalAmountAfterCommissionUSD = totalAmountInUSD + commissionAmountUSD;
+            decimal totalAmountAfterCommissionUAH = totalAmountInUAH + commissionAmountUAH;
+            decimal totalAmountAfterCommissionUSDT = totalAmountInUSDT + commissionAmountUSD;
+
+            // Преобразуем округленные значения в строки для отправки в сообщения
+            string totalAmountInUSDMessageUSD = $"{totalAmountAfterCommissionUSD}";
+            string totalAmountInUAHMessage = $"{totalAmountAfterCommissionUAH}";
+            string totalAmountInUSDTMessage = $"{totalAmountAfterCommissionUSD}";
+
+
 
 
             if (currenceFiat == "usd")
@@ -203,6 +250,10 @@ namespace TestChangeBot
             if (currenceFiat == "uah")
             {
                 await TelegramBotHandler._client.SendTextMessageAsync(chatId, totalAmountInUAHMessage);
+            }
+            if (currenceFiat == "usdt")
+            {
+                await TelegramBotHandler._client.SendTextMessageAsync(chatId, totalAmountInUSDTMessage);
             }
         }
     }
