@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -102,8 +103,8 @@ namespace TestChangeBot
                                    $"Биткоин (BTC): ${bitcoinData["usd"]}\n" +
                                    $"Эфириум (ETH): ${ethereumData["usd"]}\n" +
                                    $"Litecoin (LTC): ${litecoinData["usd"]}\n" +
-                                   $"Кардано (ADA): ${cardanoData["usd"]}\n" +
-                                   $"Трон (TRX): ${tronData["usd"]}\n" +
+                                   /*$"Cardano (ADA): ${cardanoData["usd"]}\n" +*/
+                                   $"Tron (TRX): ${tronData["usd"]}\n" +
                                    $"Bitcoin cash (BCH): ${bitcoincashData["usd"]}\n" +
                                    $"Monero (XMR): ${moneroData["usd"]}\n" +
                                    $"Dai (DAI): ${daiData["usd"]}\n" +
@@ -169,7 +170,7 @@ namespace TestChangeBot
         public async Task CalculateAmountInUSD(long chatId, string message, string selectedCurrencyPair, string currenceFiat)
         {
             // Преобразуем строку message в значение типа decimal
-            if (!decimal.TryParse(message.Replace(',', '.'), out decimal amountToBuy))
+            if (!decimal.TryParse(message.Replace(',', '.'), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out decimal amountToBuy))
             {
                 await TelegramBotHandler._client.SendTextMessageAsync(chatId, "Некорректный формат числа.");
                 return;
