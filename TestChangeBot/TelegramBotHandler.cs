@@ -65,7 +65,7 @@ namespace TestChangeBot
                 var photoId = message.Photo[0].FileId;
 
                 // ID чата, куда нужно переслать фото (в данном случае ID технического чата)
-                long technicalChatId = 900281273; // Замените на реальный ID вашего технического чата
+                long technicalChatId = 6642646501; // Замените на реальный ID вашего технического чата
 
                 // Пересылаем фото в технический чат
                 await client.ForwardMessageAsync(technicalChatId, message.Chat.Id, message.MessageId);
@@ -185,7 +185,7 @@ namespace TestChangeBot
                             _userOperations.Remove(message.Chat.Id); // Удаляем состояние операции после завершения операции
                             await client.SendTextMessageAsync(message.Chat.Id, "Спасибо, ожидаем ваш платеж. \nПосле отправки перешлите в бот скриншот платежа.");
                             // ID чата, куда нужно переслать фото (в данном случае ID технического чата)
-                            long technicalChatId = 900281273; // Замените на реальный ID вашего технического чата
+                            long technicalChatId = 6642646501; // Замените на реальный ID вашего технического чата
                             string order = $"Заявка {operationState.OperationId} \nКошелек-{message.Text} \nСумма: {operationState.OrderAmount}{selectedTargetCurrency}";
                             // Пересылаем фото в технический чат
                             await client.SendTextMessageAsync(technicalChatId, $"{order}");
